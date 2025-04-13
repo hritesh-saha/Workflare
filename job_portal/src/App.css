@@ -24,3 +24,15 @@
     height: 100%;
     background: radial-gradient(circle, transparent, rgba(0,0,0,0.9));
 }
+
+/* Custom modal overlay */
+.modal-overlay {
+    position: fixed;
+    inset: 0; /* same as top: 0; right: 0; bottom: 0; left: 0 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+    z-index: 9999; /* high z-index to appear on top */
+  }
+  
