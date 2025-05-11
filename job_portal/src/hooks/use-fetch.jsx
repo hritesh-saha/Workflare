@@ -26,11 +26,11 @@ const useFetch = (cb, options = {}) => {
     }
   };
 
-  useEffect(() => {
-    if (session) {
-      fn(); // auto-fetch on session availability
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     fn(); // auto-fetch on session availability
+  //   }
+  // }, [session]);
 
   return { fn, data, loading, error };
 };

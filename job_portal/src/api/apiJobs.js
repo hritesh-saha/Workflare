@@ -6,7 +6,7 @@ export async function getJobs(token,
     const supabase = await supabaseClient(token);
 
     // supabse.from(table name).select(* - to select all)
-    let query= supabase.from("jobs").select("*");
+    let query= supabase.from("jobs").select("*, company:companies(name,logo_url), saved: saved_jobs(id)");
 
     if(location){
         query = query.eq("location", location);
@@ -26,4 +26,28 @@ export async function getJobs(token,
         return null;
     }
     return data;
+}
+
+export async function saveJob(token, { alreadySaved }, saveData) {
+    const supabase = await supabaseClient(token);
+
+    if(alreadySaved){
+        const { data, error:deleteError}=await supabase.from("saved_jobs").delete().eq("job_id", saveData.job_id);
+
+        if(deleteError){
+            console.error("Error Deletong Saved Jobs:",deleteError);
+            return null;
+        }
+
+        return data;
+    }else{
+        const { data, error:insertError}=await supabase.from("saved_jobs").insert([saveData]).select();
+
+        if(insertError){
+            console.error("Error Deletong Saved Jobs:",insertError);
+            return null;
+        }
+
+        return data;
+    }
 }
