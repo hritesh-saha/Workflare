@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className="py-4 flex justify-between items-center mr-20 ml-2">
+      <nav className="py-4 flex justify-between items-center mr-10 ml-2">
         <Link>
           <img src="/logo2.png" alt="Logo" className="h-24 cursor-pointer" />
         </Link>

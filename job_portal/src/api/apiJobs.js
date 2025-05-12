@@ -17,7 +17,7 @@ export async function getJobs(token,
     }
 
     if(searchQuery){
-        query = query.ilike("location", `%${searchQuery}%`);
+        query = query.ilike("title", `%${searchQuery}%`);
     }
 
     const{ data, error }=await query
