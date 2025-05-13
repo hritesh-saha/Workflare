@@ -127,3 +127,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+.wmde-markdown {
+  background-color: transparent !important;
+  color: white;
+}
+
+.wmde-markdown ul {
+  list-style-type: disc !important;
+  padding-left: 25px;
+}
+
+.wmde-markdown li {
+  color: white;
+}
