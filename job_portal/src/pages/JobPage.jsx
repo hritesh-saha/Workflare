@@ -1,4 +1,6 @@
 import { getSingleJob, updateHiringStatus } from '@/api/apiJobs';
+import ApplicationCard from '@/components/ApplicationCard';
+import ApplyJobDrawer from '@/components/ApplyJobDrawer';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import useFetch from '@/hooks/use-fetch';
 import { useUser } from '@clerk/clerk-react'
@@ -22,7 +24,7 @@ const JobPage = () => {
   });
 
   const {
-    loading: loadingHringStatus,
+    loading: loadingHiringStatus,
     fn: fnHiringStatus,
   } = useFetch(updateHiringStatus, {
     job_id: id,
@@ -62,9 +64,10 @@ const JobPage = () => {
       </div>
 
       {/* hiring status */}
+      {loadingHiringStatus && <BarLoader className="mb-4" width={"100%"} color="#36d7b7"/>}
       {job?.recruiter_id === user?.id && (
         <Select onValueChange={handleStatusChange}>
-          <SelectTrigger className={`w-full ${job?.isOpen ? "bg-green-950" : "bg-red-950"}`}>
+          <SelectTrigger className={`w-full ${job?.isOpen ? "!bg-green-950" : "!bg-red-950"}`}>
             <SelectValue placeholder={"Hiring Status " + (job?.isOpen ? "( Open )" : "( Closed )")} />
           </SelectTrigger>
           <SelectContent>
@@ -82,6 +85,23 @@ const JobPage = () => {
       <MDEditor.Markdown source={job?.requirements?.replace(/\\n/g, '\n')} className="bg-transparent sm:text-lg"/>
 
       {/* render applications */}
+      {job?.recruiter_id !== user?.id &&
+       (<ApplyJobDrawer
+       job={job}
+       user={user}
+       fetchJob={fnJob}
+       applied={job?.applications?.find((ap) => ap.candidate_id === user.id)}
+      />)}
+
+      {job?.applications?.length>0 && job?.recruiter_id === user?.id && (
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-bold">Applications</h2>
+          {job?.applications.map(()=>{
+            <ApplicationCard/>
+          })}
+        </div>
+      )
+      }
 
     </div>
   )
