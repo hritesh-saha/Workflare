@@ -12,7 +12,7 @@ export async function getCompanies(token){
     return data;
 }
 
-export async function addNewCompanies(token, _, companyData){
+export async function addNewCompany(token, _, companyData){
      const supabase = await supabaseClient(token);
 
     const random = Math.floor(Math.random() * 90000);
@@ -21,7 +21,7 @@ export async function addNewCompanies(token, _, companyData){
     const {error:storageError} = await supabase.storage.from("company-logo").upload(fileName, companyData.logo);
 
     if(storageError){
-        console.error("Error Uploading Company Logo:",error);
+        console.error("Error Uploading Company Logo:",storageError);
         return null;
     }
 
