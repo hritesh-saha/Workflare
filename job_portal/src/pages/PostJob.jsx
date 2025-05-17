@@ -75,11 +75,11 @@ const PostJob = () => {
       recruiter_id: user.id,
       isOpen: true,
     });
-  }
+  };
 
-  useEffect(()=>{
-    if(dataCreateJob?.length >0) navigate("/jobs");
-  },[loadingCreateJob])
+  useEffect(() => {
+    if (dataCreateJob?.length > 0) navigate("/jobs");
+  }, [loadingCreateJob]);
 
   if (!isLoaded || loadingCompanies) {
     return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
@@ -89,13 +89,32 @@ const PostJob = () => {
     return <Navigate to="/jobs" />;
   }
 
+  const countries = [
+    "US",
+    "IN",
+    "AU",
+    "CA",
+    "GB",
+    "DE",
+    "IE",
+    "SG",
+    "BR",
+    "FR",
+  ];
+  const states = countries.flatMap((countryCode) =>
+    State.getStatesOfCountry(countryCode)
+  );
+
   return (
     <div>
       <h1 className="gradient-title font-extrabold text-5xl sm:text-7xl text-center pb-8">
         Post a Job
       </h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4 pb-0">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 p-4 pb-0"
+      >
         <Input placeholder="Job Title" {...register("title")} />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
 
@@ -109,22 +128,17 @@ const PostJob = () => {
             name="location"
             control={control}
             render={({ field }) => (
-              <Select
-              value={field.value}
-              onValueChange={field.onChange}
-              >
+              <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Filter by Location" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {State.getStatesOfCountry("IN").map(({ name }) => {
-                      return (
-                        <SelectItem key={name} value={name}>
-                          {name}
-                        </SelectItem>
-                      );
-                    })}
+                    {states.map(({ name }) => (
+                      <SelectItem key={name} value={name}>
+                        {name}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -135,13 +149,13 @@ const PostJob = () => {
             name="company_id"
             control={control}
             render={({ field }) => (
-              <Select
-              value={field.value}
-              onValueChange={field.onChange}
-              >
+              <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Filter by Company">
-                    {field.value?companies?.find((com)=> com.id === Number(field.value))?.name : "Company"}
+                    {field.value
+                      ? companies?.find((com) => com.id === Number(field.value))
+                          ?.name
+                      : "Company"}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
@@ -159,8 +173,7 @@ const PostJob = () => {
             )}
           />
 
-          <AddCompanyDrawer fetchCompanies={fnCompanies}/>
-
+          <AddCompanyDrawer fetchCompanies={fnCompanies} />
         </div>
         {errors.location && (
           <p className="text-red-500">{errors.location.message}</p>
@@ -170,11 +183,16 @@ const PostJob = () => {
         )}
 
         <Controller
-        name="requirements"
-        control={control}
-        render={({ field })=>(
-           <MDEditor className="!bg-transparent !text-white" value={field.value} onChange={field.onChange}/>
-        )}/>
+          name="requirements"
+          control={control}
+          render={({ field }) => (
+            <MDEditor
+              className="!bg-transparent !text-white"
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
         {errors.requirements && (
           <p className="text-red-500">{errors.requirements.message}</p>
         )}
@@ -183,8 +201,10 @@ const PostJob = () => {
           <p className="text-red-500">{errorCreateJob?.message}</p>
         )}
 
-         {loadingCreateJob && <BarLoader width={"100%"} color="#36d7b7" />}
-        <Button type="submit" variant="blue" size="lg" className="mt-2">Submit</Button>
+        {loadingCreateJob && <BarLoader width={"100%"} color="#36d7b7" />}
+        <Button type="submit" variant="blue" size="lg" className="mt-2">
+          Submit
+        </Button>
       </form>
     </div>
   );
