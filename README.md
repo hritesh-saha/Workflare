@@ -3,7 +3,7 @@
 
 # WorkFlare - Job Portal for Recruiters and Applicants
 
-WorkFlare is a modern job portal designed to simplify and streamline the hiring process. It caters to both recruiters and job seekers, providing intuitive interfaces for posting jobs, managing applications, and tracking opportunities in real-time.
+WorkFlare is a dynamic job portal designed for both recruiters and applicants. It streamlines the hiring process by allowing recruiters to post jobs, manage applications, and connect with top talent, while enabling job seekers to search, apply, and track opportunities with ease — all in one platform.
 
 ## Features
 
