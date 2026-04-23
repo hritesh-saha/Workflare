@@ -39,7 +39,7 @@ WorkFlare is a dynamic job portal designed for both recruiters and applicants. I
 
 ### Setup Environment Variables
 
-Create a `.env` file in the `backend` directory and add the following:
+Create a `.env` file in the root directory of the project and add the following:
 
 ```env
 VITE_SUPABASE_URL=your_supabase_url
