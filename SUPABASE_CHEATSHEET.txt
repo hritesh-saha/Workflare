@@ -1,0 +1,51 @@
+=====================================================================
+                  SUPABASE CLI WORKFLOW CHEAT SHEET
+=====================================================================
+
+--- INITIAL SETUP (Only do this once) ---
+
+1. Login to Supabase CLI:
+   npx supabase login
+
+2. Initialize Supabase in project:
+   npx supabase init
+
+3. Link to your live cloud project:
+   npx supabase link --project-ref <your-project-id>
+
+4. Pull existing cloud tables into a local migration file:
+   npx supabase db pull
+
+
+--- DAILY DEVELOPMENT WORKFLOW ---
+
+1. Start your local database and Local GUI:
+   npx supabase start
+   (Access the local GUI at http://localhost:54323)
+
+2. Stop your local database (when you are done coding):
+   npx supabase stop
+
+
+--- MAKING DATABASE CHANGES (The "Code" Flex) ---
+
+1. Make changes using the Local GUI (http://localhost:54323).
+
+2. Capture those changes into a new SQL migration file:
+   npx supabase db diff -f name_of_your_change
+   (e.g., npx supabase db diff -f add_users_table)
+
+3. Push that SQL file to update your LIVE Cloud database:
+   npx supabase db push
+
+
+--- TYPESCRIPT (Bonus Points for Interviews) ---
+
+1. Generate TypeScript types based on your current database schema:
+   npx supabase gen types typescript --project-id <your-project-id> > src/types/supabase.ts
+
+
+--- EMERGENCY COMMANDS ---
+
+1. Reset your local database back to a clean slate (wipes local data):
+   npx supabase db reset
